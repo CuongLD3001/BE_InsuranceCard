@@ -1,71 +1,275 @@
-CREATE TABLE [dbo].[chat](
-    [id] [int] PRIMARY KEY,
-    [content] [nvarchar](50) NULL,
-    [send_date] [datetime] NULL,
-    [staff_id] [int] NULL,
-    [customer_id] [int] NULL
-    );
+USE [master]
+GO
+/****** Object:  Database [SWP_G3]    Script Date: 2/14/2023 11:53:23 PM ******/
+CREATE DATABASE [SWP_G3]
 
-CREATE TABLE [dbo].[compensation](
-    [id] [int] PRIMARY KEY,
-    [images] [nvarchar](50) NULL,
-    [accident_address] [nvarchar](50) NULL,
-    [accident_time] [nvarchar](50) NULL,
-    [payment] [float] NULL,
-    [contract_id] [int] NULL,
-    [status] [nvarchar](50) NULL,
-    [customer_id] [int] NULL,
-    [manager_id] [int] NULL,
-    [staff_id] [int] NULL
-    );
-
-CREATE TABLE [dbo].[contract](
-    [id] [int] PRIMARY KEY,
-    [pattern] [nvarchar](50) NULL,
-    [typeID] [int] NULL,
-    [start_date] [datetime] NULL,
-    [end_date] [datetime] NULL,
-    [status] [nvarchar](50) NULL,
-    [manager_id] [int] NULL,
-    [staff_id] [int] NULL,
-    [customer_id] [int] NULL
-    );
-
-CREATE TABLE [dbo].[contract_type](
-    [id] [int] PRIMARY KEY,
-    [name] [nvarchar](50) NULL,
-    [vehicle_type] [nvarchar](50) NULL,
-    [price] [float] NULL,
-    [insurance_level] [float] NULL,
-    [description] [nvarchar](50) NULL,
-    [manager_id] [int] NULL
-    );
-
-CREATE TABLE [dbo].[customer](
-    [id] [int] PRIMARY KEY,
-    [username] [nvarchar](50) NULL,
-    [password] [nvarchar](50) NULL,
-    [name] [nvarchar](50) NULL,
-    [gmail] [nvarchar](50) NULL,
-    [phone] [nvarchar](50) NULL,
-    [address] [nvarchar](50) NULL,
-    [ci] [nvarchar](50) NULL,
-    [is_active] [bit] NULL,
-    [role] [nvarchar](50) NULL,
-    [manager_id] [int] NULL
-    );
-
-CREATE TABLE [dbo].[manager](
-    [id] [int] PRIMARY KEY,
-    [username] [nvarchar](50) NULL,
-    [password] [nvarchar](50) NULL,
-    [role] [nvarchar](50) NULL
-    );
-
-CREATE TABLE [dbo].[staff](
-    [id] [int] PRIMARY KEY,
-    [username] [nvarchar](50) NULL,
-    [password] [nvarchar](50) NULL,
-    [role] [nvarchar](50) NULL,
-    [manager_id] [int] NULL
-    );
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [SWP_G3].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [SWP_G3] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [SWP_G3] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [SWP_G3] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [SWP_G3] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [SWP_G3] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [SWP_G3] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [SWP_G3] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [SWP_G3] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [SWP_G3] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [SWP_G3] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [SWP_G3] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [SWP_G3] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [SWP_G3] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [SWP_G3] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [SWP_G3] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [SWP_G3] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [SWP_G3] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [SWP_G3] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [SWP_G3] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [SWP_G3] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [SWP_G3] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [SWP_G3] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [SWP_G3] SET RECOVERY FULL 
+GO
+ALTER DATABASE [SWP_G3] SET  MULTI_USER 
+GO
+ALTER DATABASE [SWP_G3] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [SWP_G3] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [SWP_G3] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [SWP_G3] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [SWP_G3] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [SWP_G3] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'SWP_G3', N'ON'
+GO
+ALTER DATABASE [SWP_G3] SET QUERY_STORE = OFF
+GO
+USE [SWP_G3]
+GO
+/****** Object:  Table [dbo].[Chat]    Script Date: 2/14/2023 11:53:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Chat](
+	[id] [int] NOT NULL,
+	[content] [nvarchar](50) NULL,
+	[send_date] [datetime] NULL,
+	[staff_id] [int] NULL,
+	[customer_id] [int] NULL,
+ CONSTRAINT [PK_Chat] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Compensation]    Script Date: 2/14/2023 11:53:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Compensation](
+	[id] [int] NOT NULL,
+	[images] [nvarchar](50) NULL,
+	[accident_address] [nvarchar](50) NULL,
+	[accident_time] [nvarchar](50) NULL,
+	[payment] [float] NULL,
+	[contract_id] [int] NULL,
+	[status] [nvarchar](50) NULL,
+	[customer_id] [int] NULL,
+	[manager_id] [int] NULL,
+	[staff_id] [int] NULL,
+ CONSTRAINT [PK_Compensation] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Contract]    Script Date: 2/14/2023 11:53:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Contract](
+	[id] [int] NOT NULL,
+	[pattern] [nvarchar](50) NULL,
+	[typeID] [int] NULL,
+	[start_date] [datetime] NULL,
+	[end_date] [datetime] NULL,
+	[status] [nvarchar](50) NULL,
+	[manager_id] [int] NULL,
+	[staff_id] [int] NULL,
+	[customer_id] [int] NULL,
+ CONSTRAINT [PK_Contact] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ContractType]    Script Date: 2/14/2023 11:53:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ContractType](
+	[id] [int] NOT NULL,
+	[name] [nvarchar](50) NULL,
+	[vehicle_type] [nvarchar](50) NULL,
+	[price] [float] NULL,
+	[insurance_level] [float] NULL,
+	[description] [nvarchar](50) NULL,
+	[manager_id] [int] NULL,
+ CONSTRAINT [PK_ContractType] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Customer]    Script Date: 2/14/2023 11:53:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Customer](
+	[id] [int] NOT NULL,
+	[username] [nvarchar](50) NULL,
+	[password] [nvarchar](50) NULL,
+	[name] [nvarchar](50) NULL,
+	[gmail] [nvarchar](50) NULL,
+	[phone] [nvarchar](50) NULL,
+	[address] [nvarchar](50) NULL,
+	[ci] [nvarchar](50) NULL,
+	[is_active] [bit] NULL,
+	[role] [nvarchar](50) NULL,
+	[manager_id] [int] NULL,
+ CONSTRAINT [PK_Customer] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Manager]    Script Date: 2/14/2023 11:53:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Manager](
+	[id] [int] NOT NULL,
+	[username] [nvarchar](50) NULL,
+	[password] [nvarchar](50) NULL,
+	[role] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Admin] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Staff]    Script Date: 2/14/2023 11:53:23 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Staff](
+	[id] [int] NOT NULL,
+	[username] [nvarchar](50) NULL,
+	[password] [nvarchar](50) NULL,
+	[role] [nvarchar](50) NULL,
+	[manager_id] [int] NULL,
+ CONSTRAINT [PK_Staff] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Chat]  WITH CHECK ADD  CONSTRAINT [FK_Chat_Customer] FOREIGN KEY([customer_id])
+REFERENCES [dbo].[Customer] ([id])
+GO
+ALTER TABLE [dbo].[Chat] CHECK CONSTRAINT [FK_Chat_Customer]
+GO
+ALTER TABLE [dbo].[Chat]  WITH CHECK ADD  CONSTRAINT [FK_Chat_Staff] FOREIGN KEY([staff_id])
+REFERENCES [dbo].[Staff] ([id])
+GO
+ALTER TABLE [dbo].[Chat] CHECK CONSTRAINT [FK_Chat_Staff]
+GO
+ALTER TABLE [dbo].[Compensation]  WITH CHECK ADD  CONSTRAINT [FK_Compensation_Admin] FOREIGN KEY([manager_id])
+REFERENCES [dbo].[Manager] ([id])
+GO
+ALTER TABLE [dbo].[Compensation] CHECK CONSTRAINT [FK_Compensation_Admin]
+GO
+ALTER TABLE [dbo].[Compensation]  WITH CHECK ADD  CONSTRAINT [FK_Compensation_Customer] FOREIGN KEY([customer_id])
+REFERENCES [dbo].[Customer] ([id])
+GO
+ALTER TABLE [dbo].[Compensation] CHECK CONSTRAINT [FK_Compensation_Customer]
+GO
+ALTER TABLE [dbo].[Compensation]  WITH CHECK ADD  CONSTRAINT [FK_Compensation_Staff] FOREIGN KEY([staff_id])
+REFERENCES [dbo].[Staff] ([id])
+GO
+ALTER TABLE [dbo].[Compensation] CHECK CONSTRAINT [FK_Compensation_Staff]
+GO
+ALTER TABLE [dbo].[Contract]  WITH CHECK ADD  CONSTRAINT [FK_Contract_Admin] FOREIGN KEY([manager_id])
+REFERENCES [dbo].[Manager] ([id])
+GO
+ALTER TABLE [dbo].[Contract] CHECK CONSTRAINT [FK_Contract_Admin]
+GO
+ALTER TABLE [dbo].[Contract]  WITH CHECK ADD  CONSTRAINT [FK_Contract_ContractType] FOREIGN KEY([typeID])
+REFERENCES [dbo].[ContractType] ([id])
+GO
+ALTER TABLE [dbo].[Contract] CHECK CONSTRAINT [FK_Contract_ContractType]
+GO
+ALTER TABLE [dbo].[Contract]  WITH CHECK ADD  CONSTRAINT [FK_Contract_Customer] FOREIGN KEY([customer_id])
+REFERENCES [dbo].[Customer] ([id])
+GO
+ALTER TABLE [dbo].[Contract] CHECK CONSTRAINT [FK_Contract_Customer]
+GO
+ALTER TABLE [dbo].[Contract]  WITH CHECK ADD  CONSTRAINT [FK_Contract_Staff] FOREIGN KEY([staff_id])
+REFERENCES [dbo].[Staff] ([id])
+GO
+ALTER TABLE [dbo].[Contract] CHECK CONSTRAINT [FK_Contract_Staff]
+GO
+ALTER TABLE [dbo].[ContractType]  WITH CHECK ADD  CONSTRAINT [FK_ContractType_Manager] FOREIGN KEY([manager_id])
+REFERENCES [dbo].[Manager] ([id])
+GO
+ALTER TABLE [dbo].[ContractType] CHECK CONSTRAINT [FK_ContractType_Manager]
+GO
+ALTER TABLE [dbo].[Customer]  WITH CHECK ADD  CONSTRAINT [FK_Customer_Admin] FOREIGN KEY([manager_id])
+REFERENCES [dbo].[Manager] ([id])
+GO
+ALTER TABLE [dbo].[Customer] CHECK CONSTRAINT [FK_Customer_Admin]
+GO
+ALTER TABLE [dbo].[Staff]  WITH CHECK ADD  CONSTRAINT [FK_Staff_Admin] FOREIGN KEY([manager_id])
+REFERENCES [dbo].[Manager] ([id])
+GO
+ALTER TABLE [dbo].[Staff] CHECK CONSTRAINT [FK_Staff_Admin]
+GO
+USE [master]
+GO
+ALTER DATABASE [SWP_G3] SET  READ_WRITE 
+GO
