@@ -1,5 +1,7 @@
 package com.swp.g3.entity;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,13 +14,21 @@ public class Customer {
     private int id;
     private String username;
     private String password;
+    @Nullable
     private String name;
+    @Nullable
     private String phone;
+    @Nullable
     private String gmail;
+    @Nullable
     private String address;
+    @Nullable
     private String ci;
+    @Nullable
     private boolean isActive;
+    @Nullable
     private String role;
+    @Nullable
     private int managerId;
 
     public int getId() {
