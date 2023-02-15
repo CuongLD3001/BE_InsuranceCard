@@ -6,29 +6,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotEmpty(message = "Thiếu tên người dùng")
     private String username;
+    @NotEmpty(message = "Thiếu mật khẩu")
     private String password;
-    @Nullable
+    @NotEmpty(message = "Thiếu tên")
     private String name;
-    @Nullable
+    @NotEmpty(message = "Thiếu số điện thoại")
     private String phone;
-    @Nullable
+    @Email(message = "Email không hợp lệ")
+    @NotEmpty(message = "Thiếu gmail")
     private String gmail;
-    @Nullable
+    @NotEmpty(message = "Thiếu địa chỉ")
     private String address;
-    @Nullable
+    @NotEmpty(message = "Thiếu số căn cước công dân")
     private String ci;
-    @Nullable
-    private boolean isActive;
-    @Nullable
-    private String role;
-    @Nullable
+    private boolean isActive = false;
+    private String role = "customer" ;
     private int managerId;
 
     public int getId() {
